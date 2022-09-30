@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
 
 import '../../models/item_model.dart';
+import '../../service/utils_services.dart';
 
 class ProductScreen extends StatelessWidget {
-  const ProductScreen({
+  ProductScreen({
     Key? key,
     required this.itemModel,
   }) : super(key: key);
 
   final ItemModel itemModel;
+  final UtilsServices utilsServices = UtilsServices();
 
   @override
   Widget build(BuildContext context) {
@@ -17,36 +19,52 @@ class ProductScreen extends StatelessWidget {
       body: Column(
         children: [
           Expanded(
-            child: Image.asset(itemModel.imgUrl!),
+            child: Image.asset(
+              itemModel.imgUrl!,
+            ),
           ),
           Expanded(
             child: Container(
-              child: Container(
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.vertical(
-                    top: Radius.circular(50),
+              padding: EdgeInsets.all(30),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.vertical(
+                  top: Radius.circular(50),
+                ),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey.shade600,
+                    offset: Offset(0, 2),
                   ),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.grey.shade600,
-                      offset: Offset(0, 2),
-                    ),
-                  ],
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    Text(
-                      itemModel.itemName!,
-                      maxLines: 2,
-                      style: TextStyle(
-                        fontSize: 27,
-                        fontWeight: FontWeight.bold,
+                ],
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Row(
+                    children: [
+                      Expanded(
+                        child: Text(
+                          itemModel.itemName!,
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                          style: TextStyle(
+                            fontSize: 27,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
                       ),
-                    ),
-                  ],
-                ),
+                      Container(
+                        height: 30,
+                        width: 70,
+                        color: Colors.red,
+                      ),
+                    ],
+                  ),
+                  Text(
+                    utilsServices.priceToCurrency(itemModel.price!),
+                  ),
+                ],
               ),
             ),
           ),
