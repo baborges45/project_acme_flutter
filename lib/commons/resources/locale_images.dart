@@ -42,4 +42,9 @@ class LocaleImages implements AppImages {
   String get fruitPapaya => _checkAndReturnString(
         strings[locale]!.fruitPapaya,
       );
+
+  @override
+  String get iconAlert => _checkAndReturnString(
+        strings[locale]!.iconAlert,
+      );
 }

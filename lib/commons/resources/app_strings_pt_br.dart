@@ -44,4 +44,22 @@ class AppStringsPtBR implements AppStrings {
   //product Screen
   @override
   String get addToCart => 'Add no carrinho';
+
+  //Cart screen
+  @override
+  String get cart => 'Carrinho';
+  @override
+  String get grandTotal => 'Total Geral';
+  @override
+  String get completeOrder => 'Concluir pedido';
+
+  //show dialog
+  @override
+  String get textConfirmation => 'Confirmação';
+  @override
+  String get textOptionConfirmation => 'Deseja realmente concluir o pedido?';
+  @override
+  String get notConfirmation => 'Não';
+  @override
+  String get yesConfirmation => 'Sim';
 }

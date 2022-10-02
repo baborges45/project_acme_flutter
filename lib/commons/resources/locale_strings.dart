@@ -94,4 +94,29 @@ class LocaleStrings implements AppStrings {
   String get addToCart => _checkAndReturnString(
         strings[locale]!.addToCart,
       );
+
+  //Cart screen
+  String get cart => _checkAndReturnString(
+        strings[locale]!.cart,
+      );
+  String get grandTotal => _checkAndReturnString(
+        strings[locale]!.grandTotal,
+      );
+  String get completeOrder => _checkAndReturnString(
+        strings[locale]!.completeOrder,
+      );
+
+  //show dialog
+  String get textConfirmation => _checkAndReturnString(
+        strings[locale]!.textConfirmation,
+      );
+  String get textOptionConfirmation => _checkAndReturnString(
+        strings[locale]!.textOptionConfirmation,
+      );
+  String get notConfirmation => _checkAndReturnString(
+        strings[locale]!.notConfirmation,
+      );
+  String get yesConfirmation => _checkAndReturnString(
+        strings[locale]!.yesConfirmation,
+      );
 }
