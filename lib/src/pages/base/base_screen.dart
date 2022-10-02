@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../commons/resources/translation.dart';
+import '../cart/cart_tab.dart';
 import '../home/home_tab.dart';
 
 class BaseScreen extends StatefulWidget {
@@ -22,9 +23,7 @@ class _BaseScreenState extends State<BaseScreen> {
         controller: _pageController,
         children: [
           HomeTab(),
-          Container(
-            color: Colors.yellow,
-          ),
+          CartTab(),
           Container(
             color: Colors.blue,
           ),

@@ -5,4 +5,6 @@ abstract class AppImages {
   String get fruitKiwi;
   String get fruitMango;
   String get fruitPapaya;
+
+  String get iconAlert;
 }

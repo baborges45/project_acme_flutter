@@ -18,4 +18,7 @@ class AppImagesPtBr implements AppImages {
 
   @override
   String get fruitPapaya => 'assets/fruits/papaya.png';
+
+  @override
+  String get iconAlert => 'assets/iconAlert/iconAlert.png';
 }

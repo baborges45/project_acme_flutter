@@ -25,4 +25,15 @@ abstract class AppStrings {
 
   //Product Screen
   String get addToCart;
+
+  //Cart screen
+  String get cart;
+  String get grandTotal;
+  String get completeOrder;
+
+  //show dialog
+  String get textConfirmation;
+  String get textOptionConfirmation;
+  String get notConfirmation;
+  String get yesConfirmation;
 }
