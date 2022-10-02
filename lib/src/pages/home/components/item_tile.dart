@@ -37,39 +37,48 @@ class ItemTile extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                Expanded(
-                  child: Image.asset(item!.imgUrl!),
-                ),
-                Text(
-                  item!.itemName!,
-                  style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                Row(
-                  children: [
-                    Text(
-                      utilsServices.priceToCurrency(item!.price!),
-                      style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                        color: CustomColors.customSwatchColor,
-                      ),
-                    ),
-                    Text(
-                      '/${item!.unit}',
-                      style: TextStyle(
-                        fontSize: 12,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.grey.shade500,
-                      ),
-                    ),
-                  ],
-                ),
+                _makeImageItem(),
+                _makeNameItem(),
+                _makePrice(),
               ],
             ),
           ),
+        ),
+      );
+
+  Text _makeNameItem() => Text(
+        item!.itemName!,
+        style: TextStyle(
+          fontSize: 16,
+          fontWeight: FontWeight.bold,
+        ),
+      );
+
+  Row _makePrice() => Row(
+        children: [
+          Text(
+            utilsServices.priceToCurrency(item!.price!),
+            style: TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+              color: CustomColors.customSwatchColor,
+            ),
+          ),
+          Text(
+            '/${item!.unit}',
+            style: TextStyle(
+              fontSize: 12,
+              fontWeight: FontWeight.bold,
+              color: Colors.grey.shade500,
+            ),
+          ),
+        ],
+      );
+
+  Expanded _makeImageItem() => Expanded(
+        child: Hero(
+          tag: item!.imgUrl!,
+          child: Image.asset(item!.imgUrl!),
         ),
       );
 
@@ -98,7 +107,8 @@ class ItemTile extends StatelessWidget {
       );
 
   void onTap(BuildContext context) {
-    Navigator.of(context).pushReplacement(
+    Navigator.push(
+      context,
       MaterialPageRoute(
         builder: (context) {
           return ProductScreen(

@@ -40,4 +40,8 @@ class AppStringsPtBR implements AppStrings {
   String get nameApp2 => 'Inc';
   @override
   String get search => 'Pesquise aqui...';
+
+  //product Screen
+  @override
+  String get addToCart => 'Add no carrinho';
 }

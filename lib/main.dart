@@ -1,8 +1,11 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import 'commons/resources/localizations/br/cuppertino_localizations.dart';
 import 'commons/resources/translation.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
+import 'src/pages/auth/components/sign_in_screen.dart';
 import 'src/pages/base/base_screen.dart';
 
 void main() {
@@ -19,6 +22,8 @@ class MyApp extends StatelessWidget {
         AppLocalizationsDelegate(),
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
+        DefaultCupertinoLocalizations.delegate,
+        PtBrCupertinoLocalizations.delegate,
       ],
       supportedLocales: [
         Locale('pt', 'BR'),

@@ -22,4 +22,7 @@ abstract class AppStrings {
   String get nameApp1;
   String get nameApp2;
   String get search;
+
+  //Product Screen
+  String get addToCart;
 }
