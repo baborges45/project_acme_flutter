@@ -88,4 +88,10 @@ class LocaleStrings implements AppStrings {
   String get search => _checkAndReturnString(
         strings[locale]!.search,
       );
+
+  //Product Screen
+  @override
+  String get addToCart => _checkAndReturnString(
+        strings[locale]!.addToCart,
+      );
 }
