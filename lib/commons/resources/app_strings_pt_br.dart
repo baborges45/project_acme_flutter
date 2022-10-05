@@ -3,26 +3,6 @@
 import 'app_strings.dart';
 
 class AppStringsPtBR implements AppStrings {
-  // LoginPage
-  @override
-  String get loginTitle01 => 'Vi';
-  @override
-  String get loginTitle02 => 'Flores';
-  @override
-  String get loginCreateAccount => 'Email';
-
-  // Animatedtext
-  @override
-  String get animatedText01 => 'Rosas';
-  @override
-  String get animatedText02 => 'Girasol';
-  @override
-  String get animatedText03 => 'Avenca';
-  @override
-  String get animatedText04 => 'Dália';
-  @override
-  String get animatedText05 => 'Ficus';
-
   // Base Screen
   @override
   String get bottomHome => 'Home';
@@ -62,4 +42,26 @@ class AppStringsPtBR implements AppStrings {
   String get notConfirmation => 'Não';
   @override
   String get yesConfirmation => 'Sim';
+
+  //order screen
+  @override
+  String get confirmedOrder => 'Pedido confirmado';
+  @override
+  String get reversedPix => 'Pix estornado';
+  @override
+  String get pixPaymentDue => 'Pagamento Pix vencido';
+  @override
+  String get payment => 'Pagamento';
+  @override
+  String get preparing => 'Preparando';
+  @override
+  String get shipping => 'Envio';
+  @override
+  String get delivered => 'Entregue';
+  @override
+  String get order => 'Pedido: ';
+  @override
+  String get total => 'Total: ';
+  @override
+  String get qrCodeWithPix => 'Ver QR Code Pix';
 }

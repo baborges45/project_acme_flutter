@@ -8,21 +8,32 @@ import 'package:flutter_project_acme/commons/resources/localizations/br/cupperti
 import 'package:flutter_project_acme/commons/resources/translation.dart';
 import 'package:flutter_project_acme/src/models/item_model.dart';
 import 'package:flutter_project_acme/src/pages/product/product_screen.dart';
-import 'package:flutter_project_acme/src/service/utils_services.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
+  List<String> items = [
+    'Armário',
+    'Navio',
+    'Mala',
+    'Base',
+    'Hidroavião',
+    'Revista',
+    'Carretel',
+    'Minissaia',
+    'Tamborim',
+    'Andador',
+    'Geladeira',
+    'Estátua',
+    'Rolo',
+  ];
+
   ItemModel grape = ItemModel(
     imgUrl: LocaleImages().fruitGrape,
-    itemName: 'Uva',
+    itemName: items,
     price: 7.4,
     unit: 'kg',
-    description:
-        'A melhor uva da região e que conta com o melhor preço de qualquer quitanda.'
-        ' Este item conta com vitaminas essenciais para o fortalecimento corporal, resultando em uma vida saudável.',
+    description: 'A melhor uva da região',
   );
-
-  final UtilsServices utilsServices = UtilsServices();
 
   testWidgets('teste find all widgets product screen', (tester) async {
     await _createWidget(
@@ -37,11 +48,6 @@ void main() {
       (image.image as AssetImage).assetName,
       grape.imgUrl,
     );
-
-    expect(
-        find.text(utilsServices.priceToCurrency(grape.price!)), findsOneWidget);
-
-    expect(find.text(grape.itemName!), findsOneWidget);
 
     expect(find.text(grape.description!), findsOneWidget);
 
@@ -67,6 +73,7 @@ Future<void> _createWidget(
       supportedLocales: const [Locale('pt', 'BR')],
       home: ProductScreen(
         itemModel: itemModel!,
+        name: itemModel.itemName!.first,
       ),
     ),
   );

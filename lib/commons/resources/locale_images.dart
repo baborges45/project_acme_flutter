@@ -47,4 +47,8 @@ class LocaleImages implements AppImages {
   String get iconAlert => _checkAndReturnString(
         strings[locale]!.iconAlert,
       );
+  @override
+  String get imagePix => _checkAndReturnString(
+        strings[locale]!.imagePix,
+      );
 }

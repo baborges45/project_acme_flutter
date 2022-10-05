@@ -10,9 +10,12 @@ class ProductScreen extends StatefulWidget {
   ProductScreen({
     Key? key,
     required this.itemModel,
+    required this.name,
   }) : super(key: key);
 
   final ItemModel itemModel;
+  final String name;
+  //final String price;
 
   @override
   State<ProductScreen> createState() => _ProductScreenState();
@@ -70,6 +73,7 @@ class _ProductScreenState extends State<ProductScreen> {
               onPressed: () => Navigator.pop(context),
               icon: Icon(
                 Icons.arrow_back_ios,
+                color: Colors.white,
               ),
             ),
           ),
@@ -91,15 +95,16 @@ class _ProductScreenState extends State<ProductScreen> {
   Expanded _makeImage() => Expanded(
         child: Hero(
           tag: widget.itemModel.imgUrl!,
-          child: Image.asset(
+          child: Image.network(
             widget.itemModel.imgUrl!,
+            fit: BoxFit.cover,
           ),
         ),
       );
 
   Expanded _makeName() => Expanded(
         child: Text(
-          widget.itemModel.itemName!,
+          widget.name.toString(),
           maxLines: 2,
           overflow: TextOverflow.ellipsis,
           style: TextStyle(

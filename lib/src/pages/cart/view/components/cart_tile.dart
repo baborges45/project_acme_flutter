@@ -1,9 +1,11 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 
-import '../../../config/custom_colors.dart';
-import '../../../models/cart_item_model.dart';
-import '../../../service/utils_services.dart';
-import '../../common_widgets/quantity_widget.dart';
+import '../../../../config/custom_colors.dart';
+import '../../../../models/cart_item_model.dart';
+import '../../../../service/utils_services.dart';
+import '../../../common_widgets/quantity_widget.dart';
 
 class CartTile extends StatefulWidget {
   CartTile({
@@ -22,17 +24,22 @@ class CartTile extends StatefulWidget {
 class _CartTileState extends State<CartTile> {
   final UtilsServices utilsServices = UtilsServices();
 
+  final random = Random();
+
+  late String item = widget.cartItem.item
+      .itemName![random.nextInt(widget.cartItem.item.itemName!.length)];
+
   @override
   Widget build(BuildContext context) {
     return Card(
       child: ListTile(
-        leading: Image.asset(
+        leading: Image.network(
           widget.cartItem.item.imgUrl!,
           height: 60,
           width: 60,
         ),
         title: Text(
-          widget.cartItem.item.itemName!,
+          item,
           style: TextStyle(
             fontWeight: FontWeight.bold,
           ),

@@ -6,7 +6,8 @@ import '../../config/custom_colors.dart';
 import '../../models/cart_item_model.dart';
 import '../../service/utils_services.dart';
 import '../../config/app_data.dart' as appData;
-import 'components/cart_tile.dart';
+import '../common_widgets/payment_dialog.dart';
+import 'view/components/cart_tile.dart';
 
 class CartTab extends StatefulWidget {
   CartTab({Key? key}) : super(key: key);
@@ -22,6 +23,9 @@ class _CartTabState extends State<CartTab> {
   void removeItemFromCart(CartItemModel cartItem) {
     setState(() {
       appData.cartItems.remove(cartItem);
+
+      utilsServices.showToast(
+          message: '${cartItem.item.itemName} removido do carrinho!');
     });
   }
 
@@ -94,6 +98,22 @@ class _CartTabState extends State<CartTab> {
                   ),
                   onPressed: () async {
                     bool? result = await showOrderConfirmation();
+
+                    if (result ?? false) {
+                      showDialog(
+                        context: context,
+                        builder: (_) {
+                          return PaymentDialog(
+                            order: appData.orders.first,
+                          );
+                        },
+                      );
+                    } else {
+                      utilsServices.showToast(
+                        message: 'Pedido não confirmado!',
+                        isError: true,
+                      );
+                    }
                   },
                   child: Text(
                     Translation.of(context).completeOrder,

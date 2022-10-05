@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../../../commons/resources/translation.dart';
 import '../cart/cart_tab.dart';
 import '../home/home_tab.dart';
+import '../orders/orders_tab.dart';
 
 class BaseScreen extends StatefulWidget {
   BaseScreen({Key? key}) : super(key: key);
@@ -24,9 +25,7 @@ class _BaseScreenState extends State<BaseScreen> {
         children: [
           HomeTab(),
           CartTab(),
-          Container(
-            color: Colors.blue,
-          ),
+          OrdersTab(),
           Container(
             color: Colors.purple,
           ),
@@ -67,7 +66,12 @@ class _BaseScreenState extends State<BaseScreen> {
   void _changePage(int index) {
     setState(() {
       currentIndex = index;
-      _pageController.jumpToPage(index);
+      //_pageController.jumpToPage(index);
+      _pageController.animateToPage(
+        index,
+        duration: Duration(milliseconds: 500),
+        curve: Curves.easeIn,
+      );
     });
   }
 }
