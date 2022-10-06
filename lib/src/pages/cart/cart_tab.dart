@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'controller/cart_controller.dart';
+import 'package:get/get.dart';
 
 import '../../../commons/resources/locale_images.dart';
 import '../../../commons/resources/translation.dart';
@@ -6,7 +8,8 @@ import '../../config/custom_colors.dart';
 import '../../models/cart_item_model.dart';
 import '../../service/utils_services.dart';
 import '../../config/app_data.dart' as appData;
-import 'components/cart_tile.dart';
+import '../common_widgets/payment_dialog.dart';
+import 'view/components/cart_tile.dart';
 
 class CartTab extends StatefulWidget {
   CartTab({Key? key}) : super(key: key);
@@ -17,11 +20,15 @@ class CartTab extends StatefulWidget {
 
 class _CartTabState extends State<CartTab> {
   final UtilsServices utilsServices = UtilsServices();
+  final cartController = Get.find<CartController>();
 
   ///function remove item from cart
   void removeItemFromCart(CartItemModel cartItem) {
     setState(() {
       appData.cartItems.remove(cartItem);
+
+      utilsServices.showToast(
+          message: '${cartItem.item.itemName} removido do carrinho!');
     });
   }
 
@@ -94,6 +101,22 @@ class _CartTabState extends State<CartTab> {
                   ),
                   onPressed: () async {
                     bool? result = await showOrderConfirmation();
+
+                    if (result ?? false) {
+                      showDialog(
+                        context: context,
+                        builder: (_) {
+                          return PaymentDialog(
+                            order: appData.orders.first,
+                          );
+                        },
+                      );
+                    } else {
+                      utilsServices.showToast(
+                        message: 'Pedido não confirmado!',
+                        isError: true,
+                      );
+                    }
                   },
                   child: Text(
                     Translation.of(context).completeOrder,

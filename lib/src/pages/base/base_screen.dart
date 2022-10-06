@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 
 import '../../../commons/resources/translation.dart';
-import '../cart/cart_tab.dart';
+import '../cart/view/cart_page.dart';
+import '../dashboard/dashboard_page.dart';
 import '../home/home_tab.dart';
+import '../orders/orders_tab.dart';
 
 class BaseScreen extends StatefulWidget {
   BaseScreen({Key? key}) : super(key: key);
@@ -23,13 +25,9 @@ class _BaseScreenState extends State<BaseScreen> {
         controller: _pageController,
         children: [
           HomeTab(),
-          CartTab(),
-          Container(
-            color: Colors.blue,
-          ),
-          Container(
-            color: Colors.purple,
-          ),
+          CartPage(),
+          OrdersTab(),
+          DashboardPage(),
         ],
       ),
       bottomNavigationBar: _makeBottomNavigatorBar(context),
@@ -58,7 +56,7 @@ class _BaseScreenState extends State<BaseScreen> {
             label: Translation.of(context).bottomOrderList,
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.person_outlined),
+            icon: Icon(Icons.graphic_eq_outlined),
             label: Translation.of(context).bottomProfile,
           ),
         ],
@@ -67,7 +65,12 @@ class _BaseScreenState extends State<BaseScreen> {
   void _changePage(int index) {
     setState(() {
       currentIndex = index;
-      _pageController.jumpToPage(index);
+      //_pageController.jumpToPage(index);
+      _pageController.animateToPage(
+        index,
+        duration: Duration(milliseconds: 500),
+        curve: Curves.easeIn,
+      );
     });
   }
 }

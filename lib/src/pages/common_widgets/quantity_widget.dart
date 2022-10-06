@@ -44,13 +44,7 @@ class QuantityWidget extends StatelessWidget {
           ),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 6),
-            child: Text(
-              '$value$suffixText',
-              style: TextStyle(
-                fontSize: 15,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
+            child: SizedBox(),
           ),
           _QuantityButton(
             color: Colors.red,

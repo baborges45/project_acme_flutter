@@ -7,4 +7,5 @@ abstract class AppImages {
   String get fruitPapaya;
 
   String get iconAlert;
+  String get imagePix;
 }

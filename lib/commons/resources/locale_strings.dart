@@ -21,42 +21,6 @@ class LocaleStrings implements AppStrings {
     return value;
   }
 
-  // LoginPage
-  @override
-  String get loginTitle01 => _checkAndReturnString(
-        strings[locale]!.loginTitle01,
-      );
-  @override
-  String get loginTitle02 => _checkAndReturnString(
-        strings[locale]!.loginTitle02,
-      );
-  @override
-  String get loginCreateAccount => _checkAndReturnString(
-        strings[locale]!.loginCreateAccount,
-      );
-
-  // Animatedtext
-  @override
-  String get animatedText01 => _checkAndReturnString(
-        strings[locale]!.animatedText01,
-      );
-  @override
-  String get animatedText02 => _checkAndReturnString(
-        strings[locale]!.animatedText02,
-      );
-  @override
-  String get animatedText03 => _checkAndReturnString(
-        strings[locale]!.animatedText03,
-      );
-  @override
-  String get animatedText04 => _checkAndReturnString(
-        strings[locale]!.animatedText04,
-      );
-  @override
-  String get animatedText05 => _checkAndReturnString(
-        strings[locale]!.animatedText05,
-      );
-
   // Base Screen
   @override
   String get bottomHome => _checkAndReturnString(
@@ -118,5 +82,37 @@ class LocaleStrings implements AppStrings {
       );
   String get yesConfirmation => _checkAndReturnString(
         strings[locale]!.yesConfirmation,
+      );
+
+  //order screen
+  String get confirmedOrder => _checkAndReturnString(
+        strings[locale]!.confirmedOrder,
+      );
+  String get reversedPix => _checkAndReturnString(
+        strings[locale]!.reversedPix,
+      );
+  String get pixPaymentDue => _checkAndReturnString(
+        strings[locale]!.pixPaymentDue,
+      );
+  String get payment => _checkAndReturnString(
+        strings[locale]!.payment,
+      );
+  String get preparing => _checkAndReturnString(
+        strings[locale]!.preparing,
+      );
+  String get shipping => _checkAndReturnString(
+        strings[locale]!.shipping,
+      );
+  String get delivered => _checkAndReturnString(
+        strings[locale]!.delivered,
+      );
+  String get total => _checkAndReturnString(
+        strings[locale]!.total,
+      );
+  String get qrCodeWithPix => _checkAndReturnString(
+        strings[locale]!.qrCodeWithPix,
+      );
+  String get order => _checkAndReturnString(
+        strings[locale]!.order,
       );
 }
