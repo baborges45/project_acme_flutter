@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/services.dart';
+import 'package:flutter/widgets.dart';
 
 import 'list_verbos.dart';
 
@@ -15,4 +16,9 @@ class HomeRepository {
 
     return stateModel;
   }
+
+  late List data;
+  late List imagesUrl = imagesUrl
+      .map((image) => NetworkImage('www.imagelink.com/${image.file}'))
+      .toList();
 }

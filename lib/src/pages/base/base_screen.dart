@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
 import '../../../commons/resources/translation.dart';
-import '../cart/cart_tab.dart';
+import '../cart/view/cart_page.dart';
+import '../dashboard/dashboard_page.dart';
 import '../home/home_tab.dart';
 import '../orders/orders_tab.dart';
 
@@ -24,11 +25,9 @@ class _BaseScreenState extends State<BaseScreen> {
         controller: _pageController,
         children: [
           HomeTab(),
-          CartTab(),
+          CartPage(),
           OrdersTab(),
-          Container(
-            color: Colors.purple,
-          ),
+          DashboardPage(),
         ],
       ),
       bottomNavigationBar: _makeBottomNavigatorBar(context),
@@ -57,7 +56,7 @@ class _BaseScreenState extends State<BaseScreen> {
             label: Translation.of(context).bottomOrderList,
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.person_outlined),
+            icon: Icon(Icons.graphic_eq_outlined),
             label: Translation.of(context).bottomProfile,
           ),
         ],

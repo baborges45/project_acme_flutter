@@ -29,8 +29,11 @@ dependencies:
     git:
       url: https://github.com/mateusfsilva/flutter_keyboard_actions.git
       ref: e70f30c95fa5879d22266f829a26f24893dccee2
+  pie_chart: ^5.3.2
   qr_flutter: ^4.0.0
   shimmer: ^2.0.0
+  supercharged: ^2.1.1
+  uuid: ^3.0.6
 
 dev_dependencies:
   bloc_test: ^9.0.3

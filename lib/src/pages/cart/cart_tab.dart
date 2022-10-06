@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'controller/cart_controller.dart';
+import 'package:get/get.dart';
 
 import '../../../commons/resources/locale_images.dart';
 import '../../../commons/resources/translation.dart';
@@ -18,6 +20,7 @@ class CartTab extends StatefulWidget {
 
 class _CartTabState extends State<CartTab> {
   final UtilsServices utilsServices = UtilsServices();
+  final cartController = Get.find<CartController>();
 
   ///function remove item from cart
   void removeItemFromCart(CartItemModel cartItem) {

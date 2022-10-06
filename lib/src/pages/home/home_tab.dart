@@ -1,21 +1,24 @@
+import 'dart:math';
+
 import 'package:add_to_cart_animation/add_to_cart_animation.dart';
 import 'package:add_to_cart_animation/add_to_cart_icon.dart';
 import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/instance_manager.dart';
-import 'package:get/state_manager.dart';
+
 import '../../../commons/resources/translation.dart';
 import '../../config/app_data.dart' as appData;
 
 import '../../config/custom_colors.dart';
-import '../../models/item_model.dart';
-import '../cart/cart_tab.dart';
+
+import '../../models/product.dart';
+import '../../service/utils_services.dart';
 import '../cart/controller/cart_controller.dart';
+import '../cart/view/cart_page.dart';
 import '../common_widgets/custom_shimmer.dart';
+import '../product/controller/product_controller.dart';
+import '../product/product_screen.dart';
 import 'components/category_title.dart';
-import 'components/item_tile.dart';
-import 'controller/home_controller.dart';
 
 class HomeTab extends StatefulWidget {
   HomeTab({
@@ -23,14 +26,14 @@ class HomeTab extends StatefulWidget {
     this.itemModel,
   }) : super(key: key);
 
-  final ItemModel? itemModel;
+  final Product? itemModel;
 
   @override
   State<HomeTab> createState() => _HomeTabState();
 }
 
 class _HomeTabState extends State<HomeTab> {
-  String selectedCategory = 'Frutas';
+  String selectedCategory = 'Acessórios';
 
   GlobalKey<CartIconKey> globalKeyCartItems = GlobalKey<CartIconKey>();
 
@@ -41,11 +44,20 @@ class _HomeTabState extends State<HomeTab> {
   }
 
   bool isLoading = true;
+  final UtilsServices utilsServices = UtilsServices();
 
   final searchController = TextEditingController();
 
-  final controller = Get.put(HomeController());
+  IconData tileIcon = Icons.add_shopping_cart_outlined;
+
+  final productController = Get.put(ProductController());
   final cartController = Get.put(CartController());
+
+  final random = Random();
+
+  late String item = appData.listName[random.nextInt(appData.listName.length)];
+
+  late int descriptionLentgth = widget.itemModel!.productDescription.length;
 
   @override
   void initState() {
@@ -55,6 +67,12 @@ class _HomeTabState extends State<HomeTab> {
       });
     });
     super.initState();
+  }
+
+  Future<void> switchIcon() async {
+    setState(() => tileIcon = Icons.check);
+    await Future.delayed(const Duration(milliseconds: 2000));
+    setState(() => tileIcon = Icons.add_shopping_cart_outlined);
   }
 
   @override
@@ -121,27 +139,22 @@ class _HomeTabState extends State<HomeTab> {
             ),
             Expanded(
               child: !isLoading
-                  ? GridView.builder(
-                      padding: EdgeInsets.fromLTRB(16, 5, 16, 16),
-                      physics: BouncingScrollPhysics(),
-                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 2,
-                        mainAxisSpacing: 10,
-                        crossAxisSpacing: 10,
-                        childAspectRatio: 9 / 11.5,
-                      ),
-                      itemCount: appData.items.length,
-                      itemBuilder: (context, index) {
-                        return GetBuilder<CartController>(
-                            init: CartController(),
-                            builder: (context) {
-                              return ItemTile(
-                                  item: appData.items[index],
-                                  cartAnimationMethod:
-                                      itemSelectedCartAnimations);
-                            });
-                      },
-                    )
+                  ? GetBuilder<ProductController>(builder: (controller) {
+                      return GridView.builder(
+                        padding: EdgeInsets.fromLTRB(16, 5, 16, 16),
+                        physics: BouncingScrollPhysics(),
+                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 2,
+                          mainAxisSpacing: 10,
+                          crossAxisSpacing: 10,
+                          childAspectRatio: 9 / 11.5,
+                        ),
+                        itemCount: controller.products.length,
+                        itemBuilder: (context, index) {
+                          return _makeItem(controller, index, context);
+                        },
+                      );
+                    })
                   : GridView.count(
                       padding: EdgeInsets.fromLTRB(16, 5, 16, 16),
                       physics: BouncingScrollPhysics(),
@@ -165,6 +178,16 @@ class _HomeTabState extends State<HomeTab> {
     );
   }
 
+  Widget _makeItem(
+          ProductController controller, int index, BuildContext context) =>
+      Stack(
+        children: [
+          _makeCard(controller: controller, index: index, context: context),
+          _makeButtonShpping(controller, index, context),
+          _makeButtonFavorite(controller, index, context)
+        ],
+      );
+
   Padding _makeButtonCart() => Padding(
         padding: const EdgeInsets.only(
           top: 10,
@@ -175,7 +198,7 @@ class _HomeTabState extends State<HomeTab> {
             builder: (context) {
               return GestureDetector(
                 onTap: () {
-                  Get.to(() => CartTab());
+                  Get.to(() => CartPage());
                 },
                 behavior: HitTestBehavior.translucent,
                 child: ConstrainedBox(
@@ -186,8 +209,8 @@ class _HomeTabState extends State<HomeTab> {
                   child: Badge(
                     badgeColor: CustomColors.customContrastColor,
                     badgeContent: Text(
-                      '2',
-                      style: TextStyle(
+                      cartController.count.toString(),
+                      style: const TextStyle(
                         color: Colors.white,
                         fontSize: 12,
                       ),
@@ -205,8 +228,7 @@ class _HomeTabState extends State<HomeTab> {
             }),
       );
 
-  GetBuilder<HomeController> _makeSearch() =>
-      GetBuilder<HomeController>(builder: (controller) {
+  Widget _makeSearch() => GetBuilder<ProductController>(builder: (controller) {
         return Padding(
           padding: const EdgeInsets.symmetric(
             horizontal: 20,
@@ -215,7 +237,7 @@ class _HomeTabState extends State<HomeTab> {
           child: TextFormField(
             controller: searchController,
             onChanged: (value) {
-              //controller.searchTitle.value = value;
+              controller.searchTitle.value = value;
               controller.filterPlayer(value);
             },
             decoration: InputDecoration(
@@ -259,4 +281,171 @@ class _HomeTabState extends State<HomeTab> {
       selectedCategory = appData.categories[index];
     });
   }
+
+  GestureDetector _makeCard({
+    required BuildContext context,
+    required ProductController controller,
+    required int index,
+  }) =>
+      GestureDetector(
+        onTap: () {
+          Get.to(
+            () => ProductScreen(
+              controller.products[index].productName,
+              controller.products[index].productImage,
+              controller.products[index].productDescription,
+            ),
+          );
+        },
+        child: Card(
+          elevation: 1,
+          shadowColor: Colors.grey.shade300,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(20),
+          ),
+          child: Padding(
+            padding: const EdgeInsets.all(12.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                _makeImageItem(controller, index, context),
+                _makeNameItem(controller, index, context),
+                _makePrice(controller, index, context),
+              ],
+            ),
+          ),
+        ),
+      );
+
+  Text _makeNameItem(
+          ProductController controller, int index, BuildContext context) =>
+      Text(
+        //item,
+        controller.products[index].productName,
+        style: TextStyle(
+          fontSize: 16,
+          fontWeight: FontWeight.bold,
+        ),
+      );
+
+  Row _makePrice(
+          ProductController controller, int index, BuildContext context) =>
+      Row(
+        children: [
+          Text(
+            utilsServices.priceToCurrency(
+              utilsServices.resultPrice(
+                controller.products[index].productName.length,
+                controller.products[index].productDescription.length,
+              ),
+            ),
+            style: TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+              color: CustomColors.customSwatchColor,
+            ),
+          ),
+        ],
+      );
+
+  Expanded _makeImageItem(
+          ProductController controller, int index, BuildContext context) =>
+      Expanded(
+        child: Hero(
+          tag: controller.products[index].price,
+          child: Container(
+            //key: imageGk,
+            child: Image.network(
+              controller.products[index].productImage,
+            ),
+          ),
+        ),
+      );
+
+  Positioned _makeButtonShpping(
+          ProductController controller, int index, BuildContext context) =>
+      Positioned(
+        top: 4,
+        right: 4,
+        child: GetBuilder<CartController>(
+            init: CartController(),
+            builder: (context) {
+              return ClipRRect(
+                borderRadius: BorderRadius.only(
+                  bottomLeft: Radius.circular(15),
+                  topRight: Radius.circular(18),
+                ),
+                child: Material(
+                  child: InkWell(
+                    onTap: () {
+                      switchIcon();
+                      cartController.addToCart(controller.products[index]);
+                      //widget.cartAnimationMethod!(imageGk);
+                      //cartController.addItem(item: widget.item!);
+                    },
+                    child: Ink(
+                      width: 40,
+                      height: 35,
+                      decoration: BoxDecoration(
+                        color: CustomColors.customSwatchColor,
+                      ),
+                      child: Icon(
+                        tileIcon,
+                        color: Colors.white,
+                        size: 20,
+                      ),
+                    ),
+                  ),
+                ),
+              );
+            }),
+      );
+
+  Positioned _makeButtonFavorite(
+          ProductController controller, int index, BuildContext context) =>
+      Positioned(
+        top: 4,
+        left: 4,
+        child: GetBuilder<CartController>(
+            init: CartController(),
+            builder: (value) {
+              return ClipRRect(
+                borderRadius: BorderRadius.only(
+                  bottomLeft: Radius.circular(15),
+                  topRight: Radius.circular(18),
+                ),
+                child: Material(
+                  child: Ink(
+                    width: 40,
+                    height: 35,
+                    child: IconButton(
+                      icon: Icon(
+                        controller.products[index].isFavourite == true
+                            ? Icons.favorite
+                            : Icons.favorite_border,
+                        color: Colors.red,
+                      ),
+                      onPressed: () {
+                        //controller.toggleFavouriteStatus(widget.item!.id!);
+                      },
+                    ),
+                  ),
+                ),
+              );
+            }),
+      );
+
+  // void onTap(BuildContext context) {
+  //   Navigator.push(
+  //     context,
+  //     MaterialPageRoute(
+  //       builder: (context) {
+  //         return ProductScreen(
+  //           itemModel: widget.item!,
+  //           name: item,
+  //         );
+  //       },
+  //     ),
+  //   );
+  // }
 }

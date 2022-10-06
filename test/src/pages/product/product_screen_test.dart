@@ -7,7 +7,7 @@ import 'package:flutter_project_acme/commons/resources/locale_strings.dart';
 import 'package:flutter_project_acme/commons/resources/localizations/br/cuppertino_localizations.dart';
 import 'package:flutter_project_acme/commons/resources/translation.dart';
 import 'package:flutter_project_acme/src/models/item_model.dart';
-import 'package:flutter_project_acme/src/pages/product/product_screen.dart';
+import 'package:flutter_project_acme/src/pages/base/base_screen.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
@@ -71,10 +71,7 @@ Future<void> _createWidget(
         PtBrCupertinoLocalizations.delegate,
       ],
       supportedLocales: const [Locale('pt', 'BR')],
-      home: ProductScreen(
-        itemModel: itemModel!,
-        name: itemModel.itemName!.first,
-      ),
+      home: BaseScreen(),
     ),
   );
 

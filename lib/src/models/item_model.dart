@@ -1,7 +1,6 @@
 import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
-import 'package:get/state_manager.dart';
 
 class ItemModel {
   ItemModel({

@@ -1,79 +1,82 @@
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:uuid/uuid.dart';
 
-import '../../../models/cart_item_model.dart';
-import '../../../models/item_model.dart';
-import '../../../models/order_model.dart';
-import '../../../service/utils_services.dart';
-import '../../common_widgets/payment_dialog.dart';
-import '../cart_result/cart_result.dart';
-import '../repository/cart_repository.dart';
+import '../../../models/cart.dart';
+import '../../../models/product.dart';
+import '../../../shared/theme.dart';
 
 class CartController extends GetxController {
-  final cartRepository = CartRepository();
   //final authController = Get.find<AuthController>();
-  final utilsServices = UtilsServices();
 
-  List<CartItemModel> cartItems = [];
+  static CartController instance = Get.find();
+  final cart = Cart().obs;
 
-  bool isCheckoutLoading = false;
-  Map<int, CartItemModel> _items = {};
+  var cartItems = <Cart>[].obs;
+  int get count => cartItems.length;
+  var count2 = 0.0;
+  double get totalPrice =>
+      cartItems.fold(0, (sum, item) => sum + item.product!.price * item.qty);
 
-  Map<int, CartItemModel> get items {
-    return {..._items};
+  double get sumPrice =>
+      cartItems.fold(0, (sum, item) => sum + item.product!.price);
+
+  void addToCart(Product product) {
+    try {
+      if (isAlredyAdded(product)) {
+        Get.snackbar(
+            'Check o carrinho', '${product.productName} foi adicionado',
+            backgroundColor: mainColor, duration: Duration(seconds: 1));
+        print('udah di added');
+      } else {
+        var uuid = Uuid();
+        String itemId = uuid.v4();
+        cartItems.add(Cart(
+          id: itemId,
+          product: product,
+          qty: 1,
+        ));
+        getTotalsMount();
+        update();
+      }
+    } catch (e) {}
   }
 
-  ItemModel? itemModel;
+  bool isAlredyAdded(Product product) =>
+      cartItems.where((item) => item.product!.id == product.id).isNotEmpty;
 
-  int get itemCount {
-    // return  _items?.length?? 0;
-    return _items.length;
-  }
+  void decreasqty({
+    Cart? cart,
+  }) {
+    if (cart!.qty == 1) {
+      removeCart(cart);
 
-  double get totalAmount {
-    var total = 0.0;
-    _items.forEach((key, cartItem) {
-      total += cartItem.price * cartItem.quantity;
-    });
-    return total;
-  }
-
-  int getItemIndex(ItemModel item) {
-    return cartItems.indexWhere((itemInList) => itemInList.item.id == item.id);
-  }
-
-  void addItem({required ItemModel item, int quantity = 1}) {
-    int itemIndex = getItemIndex(item);
-    if (_items.containsKey(itemIndex)) {
-      _items.update(
-          itemIndex,
-          (existingCartItem) => CartItemModel(
-              id: existingCartItem.id,
-              item: existingCartItem.item,
-              quantity: existingCartItem.quantity + 1,
-              price: existingCartItem.price));
-      update();
+      Get.snackbar('Ok', 'item removido do carrinho',
+          duration: Duration(seconds: 1));
     } else {
-      _items.putIfAbsent(
-        itemIndex,
-        () => CartItemModel(
-          id: DateTime.now().toString(),
-          item: itemModel!,
-          price: 0,
-          quantity: 1,
-        ),
-      );
+      int index = cartItems.indexWhere((e) => e.id == cart.id);
+      cartItems[index].qty = --cart.qty;
+      getTotalsMount();
+      update();
     }
+  }
+
+  void increasQty(Cart cart) {
+    if (cart.qty >= 1) {
+      cart.toggleDone();
+      getTotalsMount();
+      update();
+    }
+  }
+
+  void removeCart(Cart cart) {
+    cartItems.remove(cart);
+    getTotalsMount();
     update();
   }
 
-  void removeitem(int productId) {
-    _items.remove(productId);
-    update();
-  }
-
-  void clear() {
-    _items = {};
-    update();
+  void getTotalsMount() {
+    double totalamount =
+        cartItems.fold(0, (sum, item) => sum + item.product!.price * item.qty);
+    count2 = totalamount;
   }
 }

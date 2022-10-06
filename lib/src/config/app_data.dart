@@ -1,6 +1,5 @@
 import '../models/order_model.dart';
 
-import '../../commons/resources/locale_images.dart';
 import '../models/cart_item_model.dart';
 import '../models/item_model.dart';
 
@@ -20,7 +19,7 @@ ItemModel apple = ItemModel(
 
 ItemModel grape = ItemModel(
   id: 2,
-  imgUrl: 'https://picsum.photos/id/123/4928/3264',
+  imgUrl: 'https://picsum.photos/id/197/4272/2848',
   itemName: listName,
   price: 7.92,
   unit: 'kg',
@@ -34,7 +33,7 @@ ItemModel grape = ItemModel(
 
 ItemModel guava = ItemModel(
   id: 3,
-  imgUrl: 'https://picsum.photos/id/123/4928/3264',
+  imgUrl: 'https://picsum.photos/id/209/1920/1280',
   itemName: listName,
   price: 11.5,
   unit: 'kg',
@@ -48,7 +47,7 @@ ItemModel guava = ItemModel(
 
 ItemModel kiwi = ItemModel(
   id: 4,
-  imgUrl: 'https://picsum.photos/id/123/4928/3264',
+  imgUrl: 'https://picsum.photos/id/201/5184/3456',
   itemName: listName,
   price: 2.5,
   unit: 'un',
@@ -62,7 +61,7 @@ ItemModel kiwi = ItemModel(
 
 ItemModel mango = ItemModel(
   id: 5,
-  imgUrl: 'https://picsum.photos/id/123/4928/3264',
+  imgUrl: 'https://picsum.photos/id/21/3008/2008',
   itemName: listName,
   price: 2.5,
   unit: 'un',
@@ -76,7 +75,7 @@ ItemModel mango = ItemModel(
 
 ItemModel papaya = ItemModel(
   id: 6,
-  imgUrl: 'https://picsum.photos/id/123/4928/3264',
+  imgUrl: 'https://picsum.photos/id/194/2000/1325',
   itemName: listName,
   price: 8,
   unit: 'kg',
@@ -207,11 +206,11 @@ List<String> adjetivos = [
 final List<String> listName = adjetivos.followedBy(verbos).toList();
 
 List<String> categories = [
-  'Frutas',
-  'Verduras',
-  'Legumes',
-  'Temperos',
-  'Cereais',
+  'Acessórios',
+  'Tecnologia',
+  'Sapatos',
+  'Perfumes',
+  'Lugares',
 ];
 
 List<CartItemModel> cartItems = [
@@ -284,80 +283,5 @@ List<OrderModel> orders = [
         price: 10,
       ),
     ],
-  ),
-];
-
-List<ItemModel> listItemModel = [
-  ItemModel(
-    description:
-        'Lorem Ipsum is simply dummy text of the printing and typesetting industry. '
-        'Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, '
-        'when an unknown printer took a galley of type and scrambled it to make a type specimen book. '
-        'It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. '
-        'It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop p.',
-    imgUrl: LocaleImages().fruitApple,
-    itemName: listName,
-    price: 5.5,
-    unit: 'kg',
-  ),
-  ItemModel(
-    imgUrl: LocaleImages().fruitGrape,
-    itemName: listName,
-    price: 7.4,
-    unit: 'kg',
-    description:
-        'Lorem Ipsum is simply dummy text of the printing and typesetting industry. '
-        'Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, '
-        'when an unknown printer took a galley of type and scrambled it to make a type specimen book. '
-        'It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. '
-        'It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop.',
-  ),
-  ItemModel(
-    imgUrl: LocaleImages().fruitGuava,
-    itemName: listName,
-    price: 11.5,
-    unit: 'kg',
-    description:
-        'Lorem Ipsum is simply dummy text of the printing and typesetting industry. '
-        'Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, '
-        'when an unknown printer took a galley of type and scrambled it to make a type specimen book. '
-        'It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. '
-        'It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desk.',
-  ),
-  ItemModel(
-    imgUrl: LocaleImages().fruitKiwi,
-    itemName: listName,
-    price: 2.5,
-    unit: 'un',
-    description:
-        'Lorem Ipsum is simply dummy text of the printing and typesetting industry. '
-        'Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, '
-        'when an unknown printer took a galley of type and scrambled it to make a type specimen book. '
-        'It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. '
-        'It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with deskt.',
-  ),
-  ItemModel(
-    imgUrl: 'https://picsum.photos/v2/list?page=2&limit=100',
-    itemName: listName,
-    price: 2.5,
-    unit: 'un',
-    description:
-        'Lorem Ipsum is simply dummy text of the printing and typesetting industry. '
-        'Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, '
-        'when an unknown printer took a galley of type and scrambled it to make a type specimen book. '
-        'It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. '
-        'It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with des.',
-  ),
-  ItemModel(
-    imgUrl: LocaleImages().fruitPapaya,
-    itemName: listName,
-    price: 8,
-    unit: 'kg',
-    description:
-        'Lorem Ipsum is simply dummy text of the printing and typesetting industry. '
-        'Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, '
-        'when an unknown printer took a galley of type and scrambled it to make a type specimen book. '
-        'It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. '
-        'It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with de.',
   ),
 ];

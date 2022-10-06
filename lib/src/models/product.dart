@@ -1,21 +1,21 @@
+import 'package:get/get.dart';
 
+class Product {
+  Product({
+    required this.id,
+    required this.productName,
+    required this.productImage,
+    required this.productDescription,
+    required this.price,
+    this.isFavourite = false,
+  });
 
-
-class Product{
-  final int   id;
-  final String title;
-  final String imageUrl;
-  final String description;
+  final int id;
+  final String productName;
+  final String productImage;
+  final String productDescription;
   final double price;
-   bool isFavourite;
+  late final bool isFavourite;
 
-  Product(
-      {required this.id,
-      required this.title,
-      required this.imageUrl,
-      required this.description,
-      required this.price,
-      this.isFavourite = false});
-
-
+  final isFavorite = false.obs;
 }
