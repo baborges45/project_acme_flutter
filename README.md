@@ -1,6 +1,6 @@
 # flutter_project_acme
 
-A app store Flutter project.
+A app store Flutter project with getx.
 
 ## Install
 
