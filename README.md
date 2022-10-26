@@ -1,4 +1,4 @@
-# flutter_project_acme
+# flutter_project_acme_getx
 
 A app store Flutter project with getx.
 
